@@ -1,0 +1,139 @@
+/** flex布局助手 */
+
+// 1.1 （★必须声明其一）主轴（堆叠）方向
+.fx-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.fx-col {
+  display: flex;
+  flex-direction: column;
+}
+
+// 1.2 是否允许换行
+.fx-wrap {
+  flex-wrap: wrap;
+}
+
+.fx-nowrap {
+  flex-wrap: nowrap;
+}
+
+// 1.3 主轴(Main axis)排列方式
+.fx-m-start {
+  justify-content: flex-start; // 默认
+}
+
+.fx-m-center {
+  justify-content: center;
+}
+
+.fx-m-end {
+  justify-content: flex-end;
+}
+
+.fx-m-between {
+  justify-content: space-between;
+}
+
+.fx-m-around {
+  justify-content: space-around; // 兼容性不佳
+}
+
+// 1.4 侧轴(Cross axis)排列方式：元素在行中的位置 （只有一行时行占满整个侧轴，具体和1.5的区别见： http://stackoverflow.com/questions/27539262/whats-the-difference-between-align-content-and-align-items）
+.fx-c-stretch {
+  align-items: flex-stretch; // 默认，如果项目未设置高度或设为auto，将占满整个容器的高度。
+}
+
+.fx-c-start {
+  align-items: flex-start;
+}
+
+.fx-c-center {
+  align-items: center;
+}
+
+.fx-c-end {
+  align-items: flex-end;
+}
+
+.fx-c-baseline {
+  align-items: flex-baseline; // 各子元素的第一行文字的基线对齐。
+}
+
+// 1.5 侧轴(Cross axis)排列方式：多行(Line)在容器中的位置，只有一行时不生效
+.fx-cl-stretch {
+  align-content: stretch; // 默认
+}
+
+.fx-cl-start {
+  align-content: flex-start;
+}
+
+.fx-cl-center {
+  align-content: center;
+}
+
+.fx-cl-end {
+  align-content: flex-end;
+}
+
+.fx-cl-between {
+  align-content: space-between;
+}
+
+.fx-cl-around {
+  align-content: space-around; // Caution:这个在很多安卓机上不能用
+}
+
+.fx-grow {
+	flex-grow: 1;
+}
+
+// 2.2 单个子元素在侧轴上的对齐方式(align-Self)（覆盖1.4 align-items）
+.fx-s-stretch {
+  align-self: stretch;
+}
+
+.fx-s-start {
+  align-self: flex-start;
+}
+
+.fx-s-center {
+  align-self: center;
+}
+
+.fx-s-end {
+  align-self: flex-end;
+}
+
+.fx-s-baseline {
+  align-self: baseline;
+}
+
+
+/**
+ * 3. 经常使用的快捷方式
+ * (谨慎添加哦)
+ */
+
+// 3.1 各种居中
+// 子元素行排列，垂直居中
+.fx-v-center {
+  display: flex;
+  align-items: center;
+}
+
+// 子元素行排列，水平居中
+.fx-h-center {
+  display: flex;
+  justify-content: center;
+}
+
+// 子元素行排列，水平垂直居中
+.fx-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
