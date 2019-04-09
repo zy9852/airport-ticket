@@ -15,8 +15,8 @@ export default {};
 .home {
   background-color: #ccc;
   .box {
-    width: 100px;
-    height: 50px;
+    width: 100 * $px;
+    height: 50 * $px;
     background-color: skyblue;
   }
 }
