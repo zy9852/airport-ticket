@@ -34,6 +34,9 @@
 // 图片
 import bannerImg from "./images/banner-ma.jpg";
 
+// 工具
+// import axios from 'axios';
+
 // 组件
 import tabBar from "./components/tabBar";
 
@@ -41,8 +44,11 @@ export default {
   data() {
     return {
       bannerImg: bannerImg,
-      tabs: ["按航班号", "按起降地"]
+      tabs: ['按起降地','按航班号']
     };
+  },
+  created() {
+    
   },
   components: {
     tabBar
