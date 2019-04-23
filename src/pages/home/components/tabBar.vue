@@ -34,7 +34,7 @@
         <div
           class="depDate"
           :class="{placeholder: depDate === ''}"
-          @click="goCalendar"
+          @click="chooseDate('dep')"
         >{{ depDate || depdatePlaceholder }}</div>
       </div>
     </div>
@@ -55,7 +55,7 @@
         <img :src="calendarIcon" />
         <div
           :class="{placeholder: depDate === ''}"
-          @click="goCalendar"
+          @click="chooseDate('dep')"
         >{{ depDate || depdatePlaceholder }}</div>
       </div>
     </div>
@@ -69,11 +69,14 @@
       <label>往返</label>
     </div>
     <!-- 返回日期 -->
-    <div class="select-item arr-date fx-row fx-v-center" v-if="isReturn">
+    <div
+      class="select-item arr-date fx-row fx-v-center"
+      v-if="isReturn"
+    >
       <img :src="calendarIcon" />
       <div
         :class="{placeholder: arrDate === ''}"
-        @click="goCalendar"
+        @click="chooseDate('arr')"
       >{{ arrDate || arrdatePlaceholder }}</div>
     </div>
     <!-- 搜索按钮 -->
@@ -81,6 +84,10 @@
       class="search-btn"
       @click="goSearch"
     >搜索</div>
+    <show-calendar
+      v-if="canShowCalendar"
+      @choose-date="pickDate"
+    ></show-calendar>
   </div>
 </template>
 
@@ -90,6 +97,9 @@ import flightIcon from "@/assets/iconImages/flight.png";
 import depIcon from "@/assets/iconImages/dep.png";
 import arrIcon from "@/assets/iconImages/arr.png";
 import calendarIcon from "@/assets/iconImages/calendar.png";
+
+// 组件
+import showCalendar from "@/components/showCalendar";
 export default {
   props: {
     tabs: {
@@ -112,21 +122,36 @@ export default {
       arrPlaceholder: "请选择目的地",
       depdatePlaceholder: "请选择出发日期",
       arrdatePlaceholder: "请选择返回日期",
-      isReturn: false
+      isReturn: false,
+      canShowCalendar: false
     };
   },
   methods: {
-    goCalendar() {
-      // this.$router.push({
-      //   path: "/calendar"
-      // });
+    chooseDate(type) {
+      this.canShowCalendar = true;
+      this.chooseDateType = type;
+      console.log(type);
     },
     goSearch() {
       // console.log(this.isReturn);
       this.$router.push({
         path: "/ticketsList"
-      })
+      });
+    },
+    pickDate(item) {
+      let selectedDate = item.date;
+      this.canShowCalendar = false;
+      let month = selectedDate.getMonth() + 1;
+      let day = selectedDate.getDate();
+      if (this.chooseDateType === "dep") {
+        this.depDate = month + "月" + day + "日";
+      } else if (this.chooseDateType === "arr") {
+        this.arrDate = month + "月" + day + "日";
+      }
     }
+  },
+  components: {
+    showCalendar
   }
 };
 </script>
