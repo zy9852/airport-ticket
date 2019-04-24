@@ -44,10 +44,12 @@ export default {
   data() {
     return {
       bannerImg: bannerImg,
-      tabs: ['按起降地','按航班号']
+      tabs: ["按起降地", "按航班号"]
     };
   },
   created() {
+    // let airportData = localStorage.getItem("selected_airport");
+    // airportData = JSON.parse(airportData);
     
   },
   components: {
@@ -58,18 +60,15 @@ export default {
 
 <style lang="stylus" scoped>
 @import '../../stylus/common.styl';
-
 .home {
   &-head {
     height: 150 * $px;
-
     img {
       display: block;
       width: 100%;
       height: 100%;
     }
   }
-
   &-footer {
     position: fixed;
     bottom: 0;
@@ -77,7 +76,6 @@ export default {
     right: 0;
     padding: 15 * $px 15 * $px 10 * $px 15 * $px;
     box-shadow: 0 2 * $px 6 * $px #ccc;
-
     .icon-name {
       font-size: 14 * $px;
     }

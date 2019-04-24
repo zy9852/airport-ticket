@@ -18,6 +18,7 @@
         <div
           class="dep"
           :class="{placeholder: dep === ''}"
+          @click="searchAirport('dep')"
         >{{ dep || depPlaceholder }}</div>
       </div>
       <!-- 选择目的地 -->
@@ -26,6 +27,7 @@
         <div
           class="arr"
           :class="{placeholder: arr === ''}"
+          @click="searchAirport('arr')"
         >{{ arr || arrPlaceholder }}</div>
       </div>
       <!-- 选择出发日期 -->
@@ -126,18 +128,39 @@ export default {
       canShowCalendar: false
     };
   },
+  created() {
+    this.id = "airport_home";
+    let airportData = localStorage.getItem("selected_airport");
+    let homeData = localStorage.getItem(this.id);
+    if (homeData) {
+      this.restoreData();
+    }
+    localStorage.removeItem(this.id);
+    localStorage.removeItem("selected_airport");
+    airportData = JSON.parse(airportData);
+    if (airportData) {
+      if (Object.keys(airportData.dep).length > 0) {
+        this.dep = airportData.dep.name;
+      }
+      if (Object.keys(airportData.arr).length > 0) {
+        this.arr = airportData.arr.name;
+      }
+    }
+  },
   methods: {
+    // 选择日期
     chooseDate(type) {
       this.canShowCalendar = true;
       this.chooseDateType = type;
-      console.log(type);
     },
+    // 搜索
     goSearch() {
-      // console.log(this.isReturn);
-      this.$router.push({
-        path: "/ticketsList"
-      });
+      this.checkAirport();
+      // this.$router.push({
+      //   path: "/ticketsList"
+      // });
     },
+    // 显示日期
     pickDate(item) {
       let selectedDate = item.date;
       this.canShowCalendar = false;
@@ -148,6 +171,45 @@ export default {
       } else if (this.chooseDateType === "arr") {
         this.arrDate = month + "月" + day + "日";
       }
+    },
+    // 选择机场
+    searchAirport(type) {
+      type = type === "dep" ? 0 : 1;
+      this.storeData();
+      this.$router.push({
+        path: "/airport",
+        query: { type }
+      });
+    },
+    // 出发目的地判断
+    checkAirport() {
+      if (this.dep = "") {
+        alert("请选择出发地！");
+      }
+    },
+    // 存储数据
+    storeData() {
+      let params = {
+        isReturn: this.isReturn,
+        dep: this.dep,
+        arr: this.arr,
+        depDate: this.depDate,
+        arrDate: this.arrDate
+      };
+      params = JSON.stringify(params);
+      localStorage.setItem(this.id, params);
+    },
+
+    // 恢复数据
+    restoreData() {
+      let params = localStorage.getItem(this.id);
+      params = JSON.parse(params);
+      let { isReturn, dep, arr, depDate, arrDate } = params;
+      this.isReturn = isReturn;
+      this.dep = dep;
+      this.arr = arr;
+      this.depDate = depDate;
+      this.arrDate = arrDate;
     }
   },
   components: {

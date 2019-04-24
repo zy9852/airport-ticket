@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import home from '../pages/home';
-// import calendar from '../pages/calendar';
+import airport from '../pages/airport';
 import ticketsList from '../pages/ticketsList';
 
 Vue.use(Router);
@@ -14,11 +14,11 @@ export default new Router({
       name: 'home',
       component: home
     },
-    // {
-    //   path: '/calendar',
-    //   name: 'calendar',
-    //   component: calendar
-    // },
+    {
+      path: '/airport',
+      name: 'airport',
+      component: airport
+    },
     {
       path: '/ticketsList',
       name: 'ticketsList',
