@@ -5,6 +5,12 @@ import App from './App'
 import router from './router'
 import './assets/iconfont/iconfont.css';
 
+// 插件
+import 'vue2-toast/lib/toast.css';
+import Toast from 'vue2-toast';
+
+Vue.use(Toast);
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

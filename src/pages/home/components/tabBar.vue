@@ -17,18 +17,18 @@
         <img :src="depIcon" />
         <div
           class="dep"
-          :class="{placeholder: dep === ''}"
+          :class="{placeholder: dep.name === ''}"
           @click="searchAirport('dep')"
-        >{{ dep || depPlaceholder }}</div>
+        >{{ dep.name || depPlaceholder }}</div>
       </div>
       <!-- 选择目的地 -->
       <div class="select-item fx-row fx-v-center">
         <img :src="arrIcon" />
         <div
           class="arr"
-          :class="{placeholder: arr === ''}"
+          :class="{placeholder: arr.name === ''}"
           @click="searchAirport('arr')"
-        >{{ arr || arrPlaceholder }}</div>
+        >{{ arr.name || arrPlaceholder }}</div>
       </div>
       <!-- 选择出发日期 -->
       <div class="select-item fx-row fx-v-center">
@@ -116,8 +116,14 @@ export default {
       depIcon: depIcon,
       arrIcon: arrIcon,
       calendarIcon: calendarIcon,
-      dep: "",
-      arr: "",
+      dep: {
+        name: "",
+        code: null
+      },
+      arr: {
+        name: "",
+        code: null
+      },
       depDate: "",
       arrDate: "",
       depPlaceholder: "请选择出发地",
@@ -140,10 +146,10 @@ export default {
     airportData = JSON.parse(airportData);
     if (airportData) {
       if (Object.keys(airportData.dep).length > 0) {
-        this.dep = airportData.dep.name;
+        this.dep = airportData.dep;
       }
       if (Object.keys(airportData.arr).length > 0) {
-        this.arr = airportData.arr.name;
+        this.arr = airportData.arr;
       }
     }
   },
@@ -156,9 +162,13 @@ export default {
     // 搜索
     goSearch() {
       this.checkAirport();
-      // this.$router.push({
-      //   path: "/ticketsList"
-      // });
+      if (!this.checkedAirport) return;
+      console.log(this.checkedAirport);
+      this.checkDate();
+      if (!this.checkedDate) return;
+      this.$router.push({
+        path: "/ticketsList"
+      });
     },
     // 显示日期
     pickDate(item) {
@@ -183,8 +193,27 @@ export default {
     },
     // 出发目的地判断
     checkAirport() {
-      if (this.dep = "") {
-        alert("请选择出发地！");
+      this.checkedAirport = true;
+      if (!this.dep.name) {
+        this.$toast.center("请选择出发机场!");
+        this.checkedAirport = false;
+      } else if (!this.arr.name) {
+        this.$toast.center("请选择目的机场!");
+        this.checkedAirport = false;
+      } else if (this.dep.code == this.arr.code) {
+        this.$toast.center("出发地与目的地不能相同!");
+        this.checkedAirport = false;
+      }
+    },
+    //  往返时间判断
+    checkDate() {
+      this.checkedDate = true;
+      if (!this.depDate) {
+        this.$toast.center("请选择出发时间");
+        this.checkedDate = false;
+      } else if (this.isReturn && this.depDate == this.arrDate) {
+        this.$toast.center("往返时间不能相同");
+        this.checkedDate = false;
       }
     },
     // 存储数据
