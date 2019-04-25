@@ -20,7 +20,7 @@
 
 <script>
 // 数据
-import data from "./data.js";
+import data from "@/data/airport.js";
 
 // 组件
 import airportTabs from "./components/airportTabs";

@@ -167,7 +167,14 @@ export default {
       this.checkDate();
       if (!this.checkedDate) return;
       this.$router.push({
-        path: "/ticketsList"
+        path: "/ticketsList",
+        query: {
+          dep: this.dep.code,
+          arr: this.arr.code,
+          isRt: this.isReturn == true ? 0 : 1,
+          depDate: this.depDate,
+          arrDate: this.arrDate
+        }
       });
     },
     // 显示日期
