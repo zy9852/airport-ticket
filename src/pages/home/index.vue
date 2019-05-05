@@ -12,9 +12,9 @@
     <div class="home-footer fx-row fx-v-center fx-m-between">
       <div class="home-footer-icon">
         <span class="iconfont icon-Home"></span>
-        <div class="icon-name">首页</div>
+        <div class="icon-name active">首页</div>
       </div>
-      <div class="home-footer-icon">
+      <div class="home-footer-icon" @click="goRecommend">
         <span class="iconfont icon-Grid"></span>
         <div class="icon-name">推荐</div>
       </div>
@@ -34,9 +34,6 @@
 // 图片
 import bannerImg from "./images/banner-ma.jpg";
 
-// 工具
-// import axios from 'axios';
-
 // 组件
 import tabBar from "./components/tabBar";
 
@@ -51,6 +48,13 @@ export default {
     // let airportData = localStorage.getItem("selected_airport");
     // airportData = JSON.parse(airportData);
     
+  },
+  methods: {
+    goRecommend() {
+      this.$router.push({
+        path: '/recommend'
+      })
+    }
   },
   components: {
     tabBar
@@ -80,5 +84,8 @@ export default {
       font-size: 14 * $px;
     }
   }
+  // .active {
+  //   color: #1188ff;
+  // }
 }
 </style>

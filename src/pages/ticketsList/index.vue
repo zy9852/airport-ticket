@@ -22,6 +22,7 @@
         class="ticket-card"
         v-for="(item, index) in ticketList"
         :key="index"
+        @click="goBook(item)"
       >
         <div class="ticket-card-body fx-row fx-v-center fx-m-between">
           <div class="ticket-time">
@@ -37,7 +38,7 @@
           </div>
           <div class="ticket-price">￥{{ item.price }}</div>
         </div>
-        <div class="ticket-card-footer">东航MU5183</div>
+        <div class="ticket-card-footer">{{ flightNo }}</div>
       </div>
     </div>
   </div>
@@ -69,7 +70,8 @@ export default {
       isDomestic: true,
       depTimeList: [],
       arrTimeList: [],
-      ticketList: []
+      ticketList: [],
+      flightNo: '东航MU5183'
     };
   },
   created() {
@@ -140,6 +142,7 @@ export default {
           break;
       }
     },
+    // 从大到小排序
     sortNumber(a, b) {
       return a - b;
     },
@@ -187,6 +190,7 @@ export default {
         });
       }
     },
+    // 随机生成价格
     createPrice() {
       if (this.isDomestic) {
         let number = this.randomNum(0, 18);
@@ -195,8 +199,8 @@ export default {
         let number = this.randomNum(0, 13);
         return ticketMock.interPrice[number];
       }
-      
     },
+    //  生成航班列表
     createList() {
       this.createTimeArr(0, 0);
       this.createTimeArr(0, 1);
@@ -215,8 +219,22 @@ export default {
           depAirport,
           arrAirport
         };
-        
       }
+    },
+    goBook(item) {
+      this.$router.push({
+        path: '/book',
+        query: {
+          dep: this.dep.code,
+          arr: this.arr.code,
+          depTime: item.depTime,
+          arrTime: item.arrTime,
+          price: item.price,
+          depDate: this.depDate,
+          flightNo: this.flightNo,
+          from: 'ticketList'
+        }
+      })
     }
   }
 };

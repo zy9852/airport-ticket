@@ -262,6 +262,9 @@ export default {
     width: 50%;
     color: #ccc;
     display: inline-block;
+    font-size: 18 * $px;
+    font-weight: 500;
+    letter-spacing 2 * $px;
     &.active {
       color: skyblue;
     }
