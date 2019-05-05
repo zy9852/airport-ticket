@@ -13,13 +13,17 @@
       :dep-date="ticketCard.depDate"
       :arr-date="ticketCard.arrDate"
     ></ticket-card>
-    <customer-desc></customer-desc>
+    <customer-desc @to-page="selectPassager"></customer-desc>
+    <!-- <insurance-card></insurance-card> -->
+    <price-bar :price="price"></price-bar>
   </div>
 </template>
 
 <script>
 import ticketCard from "./components/ticketCard";
 import customerDesc from "./components/customerDesc";
+import priceBar from "./components/priceBar";
+// import insuranceCard from "./components/insuranceCard";
 import airport from "@/data/airport.js";
 import saleList from "@/data/sale.js";
 export default {
@@ -38,6 +42,7 @@ export default {
         arrTime: "",
         flightNo: ""
       },
+      price: null,
       timeMock: [
         [
           "08:10-10:25",
@@ -72,6 +77,7 @@ export default {
     } = query;
     this.ticketCard.flightWeek = week;
     this.ticketCard.flightNo = flightNo;
+    this.price = price; 
     this.findCity(dep, 0);
     this.findCity(arr, 1);
     if (from == "recomd") {
@@ -125,11 +131,22 @@ export default {
           return 0;
           break;
       }
+    },
+    // 选择乘机人
+    selectPassager() {
+      this.$router.push({
+        path: '/passager',
+        query: {
+          
+        }
+      })
     }
   },
   components: {
     ticketCard,
-    customerDesc
+    customerDesc,
+    priceBar
+    // insuranceCard
   }
 };
 </script>

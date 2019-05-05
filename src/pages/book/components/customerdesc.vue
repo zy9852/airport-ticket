@@ -1,5 +1,5 @@
 <template>
-  <div class="customer fx-v-center fx-m-between">
+  <div class="customer fx-v-center fx-m-between" @click="$emit('to-page')">
     <div class="customer-desc">
       <div class="customer-desc-name">{{ blockDesc }}</div>
       <div class="customer-desc-card-no" v-if="desc != ''">{{ desc }}</div>

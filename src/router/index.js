@@ -8,6 +8,7 @@ import airport from '../pages/airport'
 import ticketsList from '../pages/ticketsList'
 import recommend from '../pages/recommend'
 import book from '../pages/book'
+import passager from "../pages/passager"
 
 Vue.use(Router)
 
@@ -52,6 +53,11 @@ export default new Router({
       path: '/book',
       name: 'book',
       component: book
+    },
+    {
+      path: '/passager',
+      name: 'passager',
+      component: passager
     }
   ],
   mode: 'history'
