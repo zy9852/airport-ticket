@@ -7,6 +7,7 @@
         :card-list="domesticList"
         @to-book="toBook"
       ></list-card>
+      <div id="inter"></div>
       <list-card
         :title="'国际特价'"
         :card-list="interList"
@@ -87,7 +88,7 @@ export default {
           price: item.price,
           week: item.week,
           flightNo: item.flightNo,
-          from: 'recomd'
+          from: "recomd"
         }
       });
     }

@@ -15,7 +15,16 @@
     ></ticket-card>
     <customer-desc @to-page="selectPassager"></customer-desc>
     <!-- <insurance-card></insurance-card> -->
-    <price-bar :price="price"></price-bar>
+    <price-bar
+      :price="price"
+      @to-pay="payMethods"
+    ></price-bar>
+    <pay-methods
+      v-if="showPayMethods"
+      @cancel="showPayMethods = false"
+      :balance="balance"
+      @select-to-pay="topPaySuccessPage"
+    ></pay-methods>
   </div>
 </template>
 
@@ -24,6 +33,7 @@ import ticketCard from "./components/ticketCard";
 import customerDesc from "./components/customerDesc";
 import priceBar from "./components/priceBar";
 // import insuranceCard from "./components/insuranceCard";
+import payMethods from "./components/payMethods";
 import airport from "@/data/airport.js";
 import saleList from "@/data/sale.js";
 export default {
@@ -58,7 +68,9 @@ export default {
           "13:10-20:30",
           "14:45-21:00"
         ]
-      ]
+      ],
+      showPayMethods: false,
+      balance: 1000
     };
   },
   created() {
@@ -77,7 +89,7 @@ export default {
     } = query;
     this.ticketCard.flightWeek = week;
     this.ticketCard.flightNo = flightNo;
-    this.price = price; 
+    this.price = price;
     this.findCity(dep, 0);
     this.findCity(arr, 1);
     if (from == "recomd") {
@@ -93,7 +105,6 @@ export default {
       this.ticketCard.depTime = depTime;
       this.ticketCard.arrTime = arrTime;
     }
-
   },
   methods: {
     findCity(code, type) {
@@ -135,17 +146,30 @@ export default {
     // 选择乘机人
     selectPassager() {
       this.$router.push({
-        path: '/passager',
-        query: {
-          
-        }
-      })
+        path: "/passager",
+        query: {}
+      });
+    },
+    // 唤起支付方式
+    payMethods() {
+      this.showPayMethods = true;
+    },
+    // 支付成功页
+    topPaySuccessPage() {
+      if (this.balance < this.price) {
+        this.$toast.center('余额不足，请先充值！');
+      } else {
+        this.$router.push({
+          path: '/paySuccess'
+        })
+      }
     }
   },
   components: {
     ticketCard,
     customerDesc,
-    priceBar
+    priceBar,
+    payMethods
     // insuranceCard
   }
 };

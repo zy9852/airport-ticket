@@ -8,7 +8,11 @@ import airport from '../pages/airport'
 import ticketsList from '../pages/ticketsList'
 import recommend from '../pages/recommend'
 import book from '../pages/book'
-import passager from "../pages/passager"
+import passager from '../pages/passager'
+import paySuccess from '../pages/paySuccess'
+import user from '../pages/user';
+import orderList from '../pages/orderList';
+import addPassager from '../pages/addPassager';
 
 Vue.use(Router)
 
@@ -58,7 +62,34 @@ export default new Router({
       path: '/passager',
       name: 'passager',
       component: passager
+    },
+    {
+      path: '/paySuccess',
+      name: 'paySuccess',
+      component: paySuccess
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: user
+    },
+    {
+      path: '/orderList',
+      name: 'orderList',
+      component: orderList
+    },
+    {
+      path: '/addPassager',
+      name: 'addPassager',
+      component: addPassager
     }
   ],
-  mode: 'history'
+  mode: 'history',
+  scrollBehavior(to, from, savePosition) {
+    if (to.hash) {
+      return {
+        selector: to.hash
+      }
+    }
+  }
 })

@@ -262,11 +262,10 @@ export default {
     width: 50%;
     color: #ccc;
     display: inline-block;
-    font-size: 18 * $px;
-    font-weight: 500;
+    font-size: 20 * $px;
     letter-spacing 2 * $px;
     &.active {
-      color: skyblue;
+      color: #1188ff;
     }
     &::after {
       content: '';
@@ -276,7 +275,7 @@ export default {
       margin-top: 5 * $px;
     }
     &.active::after {
-      background-color: skyblue;
+      background-color: #1188ff;
       width: 100 * $px;
       height: 2 * $px;
       transition: width 0.5s;
