@@ -13,6 +13,7 @@ import paySuccess from '../pages/paySuccess'
 import user from '../pages/user';
 import orderList from '../pages/orderList';
 import addPassager from '../pages/addPassager';
+import recharge from "../pages/recharge";
 
 Vue.use(Router)
 
@@ -82,6 +83,11 @@ export default new Router({
       path: '/addPassager',
       name: 'addPassager',
       component: addPassager
+    },
+    {
+      path: '/recharge',
+      name: 'recharge',
+      component: recharge
     }
   ],
   mode: 'history',

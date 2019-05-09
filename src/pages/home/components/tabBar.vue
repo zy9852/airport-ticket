@@ -135,6 +135,8 @@ export default {
     };
   },
   created() {
+    let query = this.$route.query;
+    this.uid = query.uid;
     this.id = "airport_home";
     let airportData = localStorage.getItem("selected_airport");
     let homeData = localStorage.getItem(this.id);
@@ -169,6 +171,7 @@ export default {
       this.$router.push({
         path: "/ticketsList",
         query: {
+          uid: this.uid,
           dep: this.dep.code,
           arr: this.arr.code,
           isRt: this.isReturn == true ? 0 : 1,
@@ -195,7 +198,7 @@ export default {
       this.storeData();
       this.$router.push({
         path: "/airport",
-        query: { type }
+        query: { type, uid: this.uid }
       });
     },
     // 出发目的地判断
@@ -263,7 +266,7 @@ export default {
     color: #ccc;
     display: inline-block;
     font-size: 20 * $px;
-    letter-spacing 2 * $px;
+    letter-spacing: 2 * $px;
     &.active {
       color: #1188ff;
     }

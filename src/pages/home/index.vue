@@ -64,21 +64,33 @@ export default {
       tabs: ["按起降地", "按航班号"]
     };
   },
-  created() {},
+  created() {
+    let query = this.$route.query;
+    this.uid = query.uid;
+  },
   methods: {
     goRecommend() {
       this.$router.push({
-        path: "/recommend"
+        path: "/recommend",
+        query: {
+          uid: this.uid
+        }
       });
     },
     goInter() {
        this.$router.push({
-        path: "/recommend#inter"
+        path: "/recommend#inter",
+        query: {
+          uid: this.uid
+        }
       });
     },
     goUserPage() {
       this.$router.push({
-        path: "/user"
+        path: "/user",
+        query: {
+          uid: this.uid
+        }
       })
     }
   },

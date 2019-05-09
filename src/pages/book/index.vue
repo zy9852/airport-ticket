@@ -76,6 +76,7 @@ export default {
   created() {
     let query = this.$route.query;
     let {
+      uid,
       dep,
       arr,
       depDate,
@@ -87,6 +88,7 @@ export default {
       type,
       from
     } = query;
+    this.uid = uid;
     this.ticketCard.flightWeek = week;
     this.ticketCard.flightNo = flightNo;
     this.price = price;
@@ -147,7 +149,9 @@ export default {
     selectPassager() {
       this.$router.push({
         path: "/passager",
-        query: {}
+        query: {
+          uid: this.uid,
+        }
       });
     },
     // 唤起支付方式
@@ -160,7 +164,10 @@ export default {
         this.$toast.center('余额不足，请先充值！');
       } else {
         this.$router.push({
-          path: '/paySuccess'
+          path: '/paySuccess',
+          query: {
+            uid: this.uid,
+          }
         })
       }
     }

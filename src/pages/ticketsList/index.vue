@@ -76,8 +76,9 @@ export default {
   },
   created() {
     let query = this.$route.query;
-    let { dep, arr, depDate, arrDate, isRt } = query;
+    let { dep, arr, depDate, arrDate, isRt, uid } = query;
     isRt = isRt == 0 ? true : false;
+    this.uid = uid;
     if (isRt) {
       this.headIcon = return_icon;
     }
@@ -225,6 +226,7 @@ export default {
       this.$router.push({
         path: '/book',
         query: {
+          uid: this.uid,
           dep: this.dep.code,
           arr: this.arr.code,
           depTime: item.depTime,

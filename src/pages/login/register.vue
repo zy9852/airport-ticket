@@ -35,6 +35,7 @@
           @to-submit="register"
         ></submit-btn>
       </div>
+      <div class="extra" @click="toLogin">已有账号？去登录</div>
     </div>
   </div>
 </template>
@@ -55,6 +56,12 @@ export default {
       showPsdVerify: false,
       showRepsdVerify: false
     };
+  },
+  created() {
+    let users = localStorage.getItem('users');
+    users = JSON.parse(users) || { list: [] };
+    this.userList = users.list || [];
+    // console.log(this.userList);
   },
   methods: {
     // 验证用户名
@@ -88,11 +95,44 @@ export default {
     // 注册
     register() {
       if (this.isUserNameChecked && this.isPsdChecked && this.isRepsdChecked) {
+        let user = {
+          name: this.userName,
+          uid: this.userList.length,
+          password: this.password,
+        };
+        this.userList.push(user);
+        let param = {
+          list: this.userList
+        };
+        param = JSON.stringify(param);
+        localStorage.setItem('users', param);
+
+        let userData = localStorage.getItem('user-data');
+        userData = JSON.parse(userData) || { res: [] };
+        let userDataList = userData.res;
+        let this_user_data = {
+          uid: user.uid,
+          info: {
+            balance: 0
+          }
+        };
+        userDataList.push(this_user_data);
+        let dataParam = {
+          res: userDataList
+        }
+        dataParam = JSON.stringify(dataParam);
+        localStorage.setItem('user-data', dataParam);
+        
         this.$toast.bottom("注册成功");
         this.$router.push({
           path: "/login"
         });
       }
+    },
+    toLogin() {
+      this.$router.push({
+          path: "/login"
+        });
     }
   },
   components: {
@@ -118,6 +158,7 @@ export default {
     margin: 0 auto;
     position: relative;
     padding-top: 45 * $px;
+    padding-bottom 70 * $px;
     .user-icon {
       display: block;
       width: 60 * $px;
@@ -134,6 +175,13 @@ export default {
     }
     .register-form {
       margin-top: 24 * $px;
+    }
+    .extra {
+      position: absolute;
+      margin-top: 30 * $px;
+      right: 20 * $px;
+      border-bottom: 1px solid #1188ff;
+      color: #1188ff;
     }
   }
 }

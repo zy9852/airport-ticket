@@ -10,7 +10,7 @@
         <div class="name">zhouyi</div>
       </div>
       <div class="user-header-func fx-v-center fx-m-between">
-        <div class="wallet">
+        <div class="wallet" @click="toRecharge">
           <div class="desc">钱包</div>
           <div class="balance">￥{{ balance }}</div>
         </div>
@@ -47,20 +47,43 @@ export default {
       avator: avator,
       orderIcon: orderIcon,
       passagerIcon: passagerIcon,
-      balance: 150000
+      balance: null
     };
+  },
+  created() {
+    let query = this.$route.query;
+    this.uid = query.uid;
+    let data = localStorage.getItem('user-data');
+    data = JSON.parse(data);
+    let dataList = data.res;
+    this.userInfo = dataList[this.uid].info;
+    this.balance = this.userInfo.balance;
   },
   methods: {
     // 跳转订单列表
     goOrderList() {
       this.$router.push({
-        path: '/orderList'
+        path: '/orderList',
+        query: {
+          uid: this.uid
+        }
       })
     },
     // 跳转乘机人页面
     goPassager() {
       this.$router.push({
-        path: '/passager'
+        path: '/passager',
+        query: {
+          uid: this.uid
+        }
+      })
+    },
+    toRecharge() {
+      this.$router.push({
+        path: '/recharge',
+        query: {
+          uid: this.uid
+        }
       })
     }
   }
