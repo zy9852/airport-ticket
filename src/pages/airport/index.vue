@@ -4,7 +4,20 @@
       <input
         type="text"
         placeholder="请选择出发/目的机场"
+        v-model="inputValue"
+        @input="search"
       >
+      <div class="airport-header-list">
+        <div
+          class="airport-header-list-item  fx-row fx-m-between"
+          v-for="(item, index) in matchedList"
+          :key="index"
+          @click="pickCity(item)"
+        >
+          <div class="city">{{ item.name }}</div>
+          <div class="code">{{ item.code }}</div>
+        </div>
+      </div>
     </div>
     <div class="airport-tab">
       <div class="airport-tab-name">热门城市</div>
@@ -35,7 +48,9 @@ export default {
       params: {
         dep: {},
         arr: {}
-      }
+      },
+      inputValue: "",
+      matchedList: []
     };
   },
   created() {
@@ -53,6 +68,18 @@ export default {
       let params = JSON.stringify(this.params);
       localStorage.setItem("selected_airport", params);
       this.$router.go(-1);
+    },
+    search() {
+      let matchedList = [];
+      let allAirport = data.domestic.concat(data.international);
+      if (this.inputValue != "") {
+        matchedList = allAirport.filter(item => {
+          if (item.name.indexOf(this.inputValue) != -1) {
+            return item;
+          }
+        });
+      }
+      this.matchedList = matchedList;
     }
   },
   components: {
@@ -74,6 +101,15 @@ export default {
       padding-left: 8 * $px;
       font-size: 18 * $px;
       outline: none;
+    }
+    &-list {
+      padding: 10 * $px 15 * $px 10 * $px 25 * $px;
+      &-item {
+        font-size: 18 * $px;
+        padding: 10 * $px 5 * $px;
+        text-align: start;
+        border-bottom: 1px solid #eee;
+      }
     }
   }
   &-tab {

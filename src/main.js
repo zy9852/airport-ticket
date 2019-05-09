@@ -8,6 +8,8 @@ import './assets/iconfont/iconfont.css';
 // 插件
 import 'vue2-toast/lib/toast.css';
 import Toast from 'vue2-toast';
+import { DatetimePlugin } from 'vux'
+Vue.use(DatetimePlugin);
 
 Vue.use(Toast);
 

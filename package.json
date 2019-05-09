@@ -18,7 +18,8 @@
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vue-swiper-component": "^2.1.3",
-    "vue2-toast": "^2.0.2"
+    "vue2-toast": "^2.0.2",
+    "vux": "^2.9.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -55,6 +56,8 @@
     "html-webpack-plugin": "^2.30.1",
     "jest": "^22.0.4",
     "jest-serializer-vue": "^0.3.0",
+    "less": "^3.9.0",
+    "less-loader": "^5.0.0",
     "nightwatch": "^0.9.12",
     "node-notifier": "^5.1.2",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
@@ -75,6 +78,7 @@
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
+    "vux-loader": "^1.2.9",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
