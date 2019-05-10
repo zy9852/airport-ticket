@@ -29,6 +29,8 @@ export default {
     };
   },
   created() {
+    let query = this.$route.query;
+    this.uid = query.uid;
     this.filtDomestic();
     this.filtInter();
   },
@@ -81,6 +83,7 @@ export default {
       this.$router.push({
         path: "/book",
         query: {
+          uid: this.uid,
           type: item.type,
           dep: item.depCode,
           arr: item.arrCode,

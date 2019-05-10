@@ -1,8 +1,14 @@
 <template>
-  <div class="customer fx-v-center fx-m-between" @click="$emit('to-page')">
+  <div
+    class="customer fx-v-center fx-m-between"
+    @click="$emit('to-page')"
+  >
     <div class="customer-desc">
       <div class="customer-desc-name">{{ blockDesc }}</div>
-      <div class="customer-desc-card-no" v-if="desc != ''">{{ desc }}</div>
+      <div
+        class="customer-desc-card-no"
+        v-if="idNo != ''"
+      >身份证号：{{ idNo }}</div>
     </div>
     <div class="arrow">
       <img :src="arrowIcon" />
@@ -17,8 +23,8 @@ export default {
     blockDesc: {
       type: String,
       default: "乘机人"
-    }, 
-    desc: {
+    },
+    idNo: {
       type: String,
       default: ""
     }
@@ -38,6 +44,7 @@ export default {
   padding: 10 * $px 0 10 * $px 15 * $px;
   border-radius: 8 * $px;
   box-shadow: 0 0 6 * $px #ccc;
+  text-align: start;
   &-desc {
     font-size: 18 * $px;
     &-card-no {

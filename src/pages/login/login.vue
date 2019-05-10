@@ -86,9 +86,6 @@ export default {
       if (!isRegistered) {
         this.$toast.center('该用户名不存在，请先注册');
       }
-      // this.$router.push({
-      //   path: "/home"
-      // });
     }
   },
   components: {

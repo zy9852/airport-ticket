@@ -13,7 +13,11 @@
       :dep-date="ticketCard.depDate"
       :arr-date="ticketCard.arrDate"
     ></ticket-card>
-    <customer-desc @to-page="selectPassager"></customer-desc>
+    <customer-desc
+      @to-page="selectPassager"
+      :block-desc="pasger.name"
+      :id-no="pasger.idNo"
+    ></customer-desc>
     <!-- <insurance-card></insurance-card> -->
     <price-bar
       :price="price"
@@ -36,6 +40,7 @@ import priceBar from "./components/priceBar";
 import payMethods from "./components/payMethods";
 import airport from "@/data/airport.js";
 import saleList from "@/data/sale.js";
+import { dateFormat } from "vux";
 export default {
   data() {
     return {
@@ -70,7 +75,11 @@ export default {
         ]
       ],
       showPayMethods: false,
-      balance: 1000
+      balance: 0,
+      pasger: {
+        name: "乘机人",
+        idNo: ""
+      }
     };
   },
   created() {
@@ -107,6 +116,23 @@ export default {
       this.ticketCard.depTime = depTime;
       this.ticketCard.arrTime = arrTime;
     }
+
+    let pasger = localStorage.getItem("add-pasger") || "";
+    localStorage.removeItem("add-pasger");
+    if (pasger) {
+      this.pasger = JSON.parse(pasger);
+    }
+
+    let data = localStorage.getItem("user-data");
+    data = JSON.parse(data);
+    this.data = data;
+    let dataList = data.res;
+    this.userInfo = dataList[this.uid].info;
+    this.balance = this.userInfo.balance;
+    if (!this.userInfo.hasOwnProperty("orderList")) {
+      this.userInfo.orderList = [];
+    }
+    this.orderList = this.userInfo.orderList;
   },
   methods: {
     findCity(code, type) {
@@ -150,25 +176,53 @@ export default {
       this.$router.push({
         path: "/passager",
         query: {
-          uid: this.uid,
+          uid: this.uid
         }
       });
     },
     // 唤起支付方式
     payMethods() {
+      if (this.pasger.idNo == "") {
+        this.$toast.center("请先选择乘机人！");
+        return false;
+      }
       this.showPayMethods = true;
+    },
+    // 生成订单号
+    createOrderId() {
+      let orderId = ""; //订单号
+      //6位随机数，用以加在时间戳后面。
+      for (let i = 0; i < 6; i++) {
+        orderId += Math.floor(Math.random() * 10);
+      }
+      orderId = new Date().getTime() + orderId;
+      return orderId;
     },
     // 支付成功页
     topPaySuccessPage() {
       if (this.balance < this.price) {
-        this.$toast.center('余额不足，请先充值！');
+        this.$toast.center("余额不足，请先充值！");
       } else {
+        this.data.res[this.uid].info.balance =
+          parseInt(this.balance) - parseInt(this.price);
+          let orderId = this.createOrderId();
+        let order = {
+          ticketCard: this.ticketCard,
+          passager: this.pasger,
+          price: this.price,
+          time: dateFormat(new Date(), "YYYY-MM-DD HH:mm"),
+          orderId: orderId
+        };
+        this.orderList.push(order);
+        this.data.res[this.uid].info.orderList = this.orderList;
+        let data = JSON.stringify(this.data);
+        localStorage.setItem("user-data", data);
         this.$router.push({
-          path: '/paySuccess',
+          path: "/paySuccess",
           query: {
-            uid: this.uid,
+            uid: this.uid
           }
-        })
+        });
       }
     }
   },

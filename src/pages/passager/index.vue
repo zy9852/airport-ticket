@@ -5,29 +5,51 @@
       <img :src="addIcon" alt="">
     </div>
     <div class="passager-body">
-      <passager-item></passager-item>
+      <passager-list :pasger-list="passagerList"
+      @pick-item="pickItem"></passager-list>
     </div>
   </div>
 </template>
 
 <script>
 import addIcon from "@/assets/iconImages/add.png";
-import passagerItem from "./components/passagerItem";
+import passagerList from "./components/passagerList";
 export default {
   data() {
     return {
-      addIcon: addIcon
+      addIcon: addIcon,
+      passagerList: []
     }
+  },
+  created() {
+    let query = this.$route.query;
+    this.uid = query.uid;
+    let data = localStorage.getItem("user-data");
+    data = JSON.parse(data);
+    this.data = data;
+    let dataList = data.res;
+    this.userInfo = dataList[this.uid].info;
+    this.passagerList = this.userInfo.pasgerList;
   },
   methods: {
     addPassager() {
       this.$router.push({
-        path: '/addPassager'
+        path: '/addPassager',
+        query: {
+          uid: this.uid
+        }
       })
+    },
+    pickItem(value) {
+      let item = value;
+      this.id = 'add-pasger';
+      item = JSON.stringify(item);
+      localStorage.setItem(this.id, item);
+      this.$router.back(-1);
     }
   },
   components: {
-    passagerItem
+    passagerList
   }
 }
 </script>

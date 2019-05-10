@@ -4,7 +4,7 @@
       <img :src="successIcon" />
     </div>
     <div class="desc">恭喜你，支付成功！</div>
-    <div class="order-btn" @click="goOrderDetail">查看订单详情</div>
+    <div class="order-btn" @click="goOrderDetail">查看订单列表</div>
     <div class="back-btn" @click="goIndex">返回首页</div>
   </div>
 </template>
@@ -17,15 +17,25 @@ export default {
       successIcon: successIcon
     };
   },
+  created() {
+    let query = this.$route.query;
+    this.uid = query.uid;
+  },
   methods: {
     goIndex() {
       this.$router.push({
-        path: '/home'
+        path: '/home',
+        query: {
+          uid: this.uid
+        }
       })
     },
     goOrderDetail() {
       this.$router.push({
-        path: '/orderDetail'
+        path: '/orderList',
+         query: {
+          uid: this.uid
+        }
       })
     }
   }

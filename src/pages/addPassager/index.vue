@@ -38,7 +38,10 @@
       ></input-item>
     </div>
     <div class="add-pasger-footer">
-      <div class="add-pasger-footer-btn" @click="saveInfo">保存</div>
+      <div
+        class="add-pasger-footer-btn"
+        @click="saveInfo"
+      >保存</div>
     </div>
     <popup-picker
       v-if="showGender"
@@ -67,6 +70,20 @@ export default {
   components: {
     inputItem,
     PopupPicker
+  },
+  created() {
+    let query = this.$route.query;
+    this.uid = query.uid;
+    let data = localStorage.getItem("user-data");
+    data = JSON.parse(data);
+    this.data = data;
+    let dataList = data.res;
+    this.userInfo = dataList[this.uid].info;
+    if (!this.userInfo.hasOwnProperty("pasgerList")) {
+      this.userInfo.pasgerList = [];
+    }
+    this.pasgerList = this.userInfo.pasgerList;
+    console.log(this.userInfo);
   },
   methods: {
     showDate() {
@@ -101,21 +118,36 @@ export default {
       // 验证身份证号
       let regId = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
       if (!regId.test(this.idNumber)) {
-        this.$toast.center('身份证号填写有误');
+        this.$toast.center("身份证号填写有误");
         return false;
       }
       // 验证姓名
-      let regName =/^[\u4e00-\u9fa5]{2,4}$/; 
+      let regName = /^[\u4e00-\u9fa5]{2,4}$/;
       if (!regName.test(this.name)) {
-        this.$toast.center('姓名填写有误');
+        this.$toast.center("姓名填写有误");
         return false;
       }
       // 验证手机号
       let regPhone = /^1[3|4|5|8][0-9]\d{4,8}$/;
       if (!regPhone.test(this.phone)) {
-        this.$toast.center('手机号填写有误');
+        this.$toast.center("手机号填写有误");
         return false;
       }
+
+      let params = {
+        idNo: this.idNumber,
+        name: this.name,
+        birth: this.birth,
+        gender: this.gender,
+        phone: this.phone
+      };
+      this.pasgerList.push(params);
+      this.data.res[this.uid].info.pasgerList = this.pasgerList;
+      let data = JSON.stringify(this.data);
+      localStorage.setItem('user-data', data);
+
+      this.$toast.center('保存成功');
+      this.$router.back(-1);
     }
   }
 };

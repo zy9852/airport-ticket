@@ -7,7 +7,7 @@
           :style="{backgroundImage: 'url(' + avator+ ')', backgroundSize: 'cover', backgroundPosition: 'center center'}"
         >
         </div>
-        <div class="name">zhouyi</div>
+        <div class="name">{{ userName }}</div>
       </div>
       <div class="user-header-func fx-v-center fx-m-between">
         <div class="wallet" @click="toRecharge">
@@ -47,13 +47,17 @@ export default {
       avator: avator,
       orderIcon: orderIcon,
       passagerIcon: passagerIcon,
-      balance: null
+      balance: null,
+      userName: ''
     };
   },
   created() {
     let query = this.$route.query;
     this.uid = query.uid;
     let data = localStorage.getItem('user-data');
+    let user = localStorage.getItem('users');
+    user = JSON.parse(user).list[this.uid];
+    this.userName = user.name;
     data = JSON.parse(data);
     let dataList = data.res;
     this.userInfo = dataList[this.uid].info;
