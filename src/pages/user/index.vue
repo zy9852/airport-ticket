@@ -98,7 +98,7 @@ export default {
 @import '../../stylus/common.styl';
 .user {
   &-header {
-    background: url('https://cdn.133.cn/ticket/images/hangban/vue/individual/head.jpg');
+    background: url('./imgs/head.jpg');
     background-size: cover;
     padding: 30 * $px 15 * $px 10 * $px 15 * $px;
     &-title {

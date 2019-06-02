@@ -38,7 +38,10 @@
         <span class="iconfont icon-icon_arrive"></span>
         <div class="icon-name">动态</div>
       </div> -->
-      <div class="home-footer-icon" @click="goUserPage">
+      <div
+        class="home-footer-icon"
+        @click="goUserPage"
+      >
         <span class="iconfont icon-UserProfile"></span>
         <div class="icon-name">个人中心</div>
       </div>
@@ -52,10 +55,10 @@
 import saleBanner from "./images/banner1.png";
 import domesticBanner from "./images/domestic.jpg";
 import interBanner from "./images/inter.jpg";
-import { Swiper, Slide } from "vue-swiper-component";
 
 // 组件
 import tabBar from "./components/tabBar";
+import { Swiper, Slide } from "vue-swiper-component";
 
 export default {
   data() {
@@ -78,7 +81,7 @@ export default {
       });
     },
     goInter() {
-       this.$router.push({
+      this.$router.push({
         path: "/recommend#inter",
         query: {
           uid: this.uid
@@ -91,7 +94,7 @@ export default {
         query: {
           uid: this.uid
         }
-      })
+      });
     }
   },
   components: {
@@ -116,7 +119,7 @@ export default {
         color: #fff;
         font-size: 22 * $px;
         font-weight: 600;
-        letter-spacing 4 * $px;
+        letter-spacing: 4 * $px;
         left: 187 * $px;
         transform: translate(-50%, -50%);
       }
